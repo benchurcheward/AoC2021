@@ -46,13 +46,18 @@ def main():
     grid = parse_grid(input_file)
     #print(grid)
     count_flash = 0
-    for t in range(100):
+    t = 0
+    while True:
+        t += 1
         for i in range(len(grid)):
             for j in range(len(grid[i])):
                 count_flash += flash(grid, i, j)
         grid = np.where(grid>9, 0, grid)
-
-    print(f"There have been {count_flash} flashes.")
+        if np.sum(grid) == 0:
+            print(f"All octopus flash at once during {t}-th step.")
+            break
+        if t == 100:
+            print(f"There have been {count_flash} flashes after 100 steps.")
     return
 
 if __name__ == '__main__':
